@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken')
 const secretKey = "ThisKeyIsUsedForJwtTokenForTestingWebsite"
 
 //  console.log("check1")
-router.post('/signup',
+
+//Route 1
+router.post('/signUp',
   [body('name', 'Name should be greater than 3').isLength({ min: 3 }),
   body('email', 'Please enter a valid email').isEmail(),
   body('password', 'Password should be greater than 3').isLength({ min: 5 })],
@@ -54,6 +56,48 @@ router.post('/signup',
     }
   })
 
+//Route 2
+router.post('/signIn',
+[ body('email','Email or Password is incorrect').isEmail(),
+  body('password','Password can not be empty').exists()],
+async (req,res) => {
+  try{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array()});
+    }
+    //  console.log(req.body.email)
+     
+      //Returns the complete object
+      let incomingUser =  await User.findOne({email: req.body.email});
+      // console.log(incomingUser)
+      if (!incomingUser)
+          return res.status(400).json({ "errors": "Email or Password is incorrect"});
+
+      //check if the incomming password and hashed password is same for login    
+      const comparePassword = await bcrypt.compare(req.body.password,incomingUser.password)
+      if(!comparePassword)
+      {
+        return res.status(400).json({ "errors": "Email or Password is incorrect"});
+      }
+
+      
+      const data = {
+        user:{
+          name: incomingUser.name,
+          email: req.body.email
+        }
+      }
+      const authtoken = jwt.sign(data,secretKey);
+      res.json({
+        authtoken: authtoken,
+        message: "Login Successful"
+      });
+  }
+  catch{
+    return res.status(400).json({ "errors": "Some error occured please try again later"});
+  }
+})
 
 
 module.exports = router
