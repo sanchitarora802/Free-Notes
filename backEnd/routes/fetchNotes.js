@@ -53,5 +53,80 @@ router.get('/getNotes', fetchUserId, async function (req, res) {
     }
 })
 
+//Route 3: Update an existing note.
+router.put('/updateNote/:id', fetchUserId, async function(req,res){
+    try {
+        const fetchedUserId = req.incommingUser.id;
+
+        //create a new note of the incomming values
+        const newNote = {};
+        if(req.body.title || req.body.description || req.body.tag)
+        {
+              newNote.title = req.body.title,
+              newNote.description = req.body.description,
+              newNote.tag = req.body.tag
+        }
+
+        //verify the existing Note and let user update
+        // console.log(req.params.id)
+        let existingNote = await Note.findById(req.params.id)
+        if(!existingNote)
+        {
+            return res.status(400).send("Not Found")
+        }
+        else if(existingNote.userid.toString() !== fetchedUserId)
+        {
+            // console.log(existingNote.userid)
+            // console.log(fetchedUserId)
+            return res.status(401).send("Not Allowed")
+        }
+        else
+        {
+                existingNote = await Note.findByIdAndUpdate(req.params.id, {$set: newNote}, {new:true})
+                res.json({
+                    existingNote
+                })
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ "errors": "Some error occured please try again later" });
+    }
+})
+
+//Route 4: Delete an existing note.
+router.delete('/deleteNote/:id', fetchUserId, async function(req,res){
+    try {
+        const fetchedUserId = req.incommingUser.id;
+
+        
+        //verify the existing Note and let user delete
+        // console.log(req.params.id)
+        let existingNote = await Note.findById(req.params.id)
+        if(!existingNote)
+        {
+            return res.status(400).send("Not Found")
+        }
+        else if(existingNote.userid.toString() !== fetchedUserId)
+        {
+            // console.log(existingNote.userid)
+            // console.log(fetchedUserId)
+            return res.status(401).send("Not Allowed")
+        }
+        else
+        {
+                existingNote = await Note.findByIdAndDelete(req.params.id)
+                res.json({
+                    "Message" : "Note Deleted Successfully",
+                    existingNote
+                })
+        }
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ "errors": "Some error occured please try again later" });
+    }
+})
+
 module.exports = router;
 
