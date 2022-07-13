@@ -1,10 +1,14 @@
-const express = require('express')
-import mongoose, { Schema } from 'mongoose'
-
+const {mongoose, Schema } = require('mongoose')
 
 const notesSchema = new Schema({
+    userid: {
+       type: mongoose.Schema.Types.ObjectId,
+       ref: 'user',
+       required: true
+    },
     title: {
-      type: String
+      type: String,
+      required: true
     },
     description: {
         type: String,

@@ -15,6 +15,7 @@ app.use(express.json());
 // })
 
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/fetchNotes', require('./routes/fetchNotes'))
 
 app.listen(port, () => {
   console.log(`Example app listening on port http://localhost:${port}`)
