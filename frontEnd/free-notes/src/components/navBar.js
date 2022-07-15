@@ -1,22 +1,29 @@
-import React from 'react'
-import {Link} from "react-router-dom";
+import {React,useEffect} from 'react'
+import {Link,useLocation} from "react-router-dom";
   
 
-function navBar() {
+function NavBar() {
+    //Used for checking which page is active.
+    let location = useLocation();
+    useEffect(() => {
+        // console.log(location.pathname)
+    })
+
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navbar-brand" to="/">Free-Notes</Link>
+                <Link className="navbar-brand" to="/home">Free-Notes</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <Link className="nav-link" to="/home">Home </Link>
+                        <li className={`nav-item ${location.pathname === "/home" ? "active" : ""} `}>
+                            <Link className="nav-link" to="/addNotes">AddNotes </Link>
                         </li>
-                        <li className="nav-item">
+                        <li className={`nav-item ${location.pathname === "/about" ? "active" : ""} `}>
                             <Link className="nav-link" to="/about">About</Link>
                         </li>
                         {/* <li className="nav-item">
@@ -33,4 +40,4 @@ function navBar() {
     )
 }
 
-export default navBar
+export default NavBar
