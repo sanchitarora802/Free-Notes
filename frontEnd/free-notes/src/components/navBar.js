@@ -1,15 +1,14 @@
-import {React,useEffect} from 'react'
+import {React} from 'react'
 import {Link,useLocation} from "react-router-dom";
   
 
 function NavBar() {
-    //Used for checking which page is active.
+    // Used for checking which page is active.
+    // useEffect(() => {
+    //     console.log(location.pathname)
+    // })
+
     let location = useLocation();
-    useEffect(() => {
-        // console.log(location.pathname)
-    })
-
-
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">

@@ -34,16 +34,45 @@ const NoteState = (props) => {
             "__v": 0
         }
     ]
-    
-     const [notes,setNotes] = useState(notesStarting)
-   
 
-   return(
-    //Boiler plate code for using context api (Wherever the NoteState would be used within that the props.children will be automatically inserted )
-    <noteContext.Provider value={{notes,setNotes}}>
-        {props.children}
-    </noteContext.Provider>
-   )
+    // Add a new note 
+    const addNote = (title, description, tag) => {
+
+        const dummyNote =
+        {
+            "_id": "62d1239befcebb8681125a8387",
+            "userid": "62cd48eb110b4af5a0563329",
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "timeStamp": "2022-07-15T08:21:47.570Z",
+            "__v": 0
+        }
+        console.log("Adding a new note")
+        setNotes(notes.concat(dummyNote))
+    }
+
+    // Delete a new note 
+    const deleteNote = (id) => {
+        console.log("deleting a existing note")
+        setNotes(notes.filter( (note) => {
+            return note._id !== id
+        }))        
+    }
+
+    // Edit a new note
+
+
+
+    //Notes State
+    const [notes, setNotes] = useState(notesStarting)
+
+    return (
+        //Boiler plate code for using context api (Wherever the NoteState would be used within that the props.children will be automatically inserted )
+        <noteContext.Provider value={{ notes, setNotes, addNote, deleteNote }}>
+            {props.children}
+        </noteContext.Provider>
+    )
 }
 
 export default NoteState

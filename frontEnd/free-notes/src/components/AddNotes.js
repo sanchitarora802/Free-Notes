@@ -1,8 +1,31 @@
-import React from 'react'
+import React, {useContext,useState} from 'react'
 import Notes from './Notes'
+import contextPath from '../contexts/notes/noteContext'
 
 function AddNotes() {
- 
+
+    const contextUsed = useContext(contextPath)
+    
+    // Default state for this component only 
+    const [demoNote, setdemoNote] = new useState({
+        title: "",
+        description: "",
+        tag: ""
+    })
+
+
+    // this function will directly call the set state function and will change the event value of event name automatically. But then the default state name and input names should match.
+        const changeFunction = (e) => {
+        setdemoNote({...demoNote, [e.target.name] : [e.target.value]})
+    }
+
+    const handleSubmit = (e) => {
+       e.preventDefault();
+       console.log("Add button")
+       // while calling the function always check the parameters to send. Dont always send the complete object. Check for the parameters it is accepting
+       contextUsed.addNote(demoNote.title,demoNote.description,demoNote.tag)
+    }
+
 
     return (
         <>
@@ -12,19 +35,21 @@ function AddNotes() {
 
             <form className="container my-3">
                 <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <label>Title</label>
+                    <input type="text" className="form-control" id="title" name= "title" placeholder="Enter title" onChange={changeFunction}/>
                 </div>
+
                 <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                    <label>Description</label>
+                    <input type="text" className="form-control" id="description" name= "description" placeholder="Enter Description" onChange={changeFunction} />
                 </div>
-                <div className="form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label">Check me out</label>
+               
+                <div className="form-group">
+                    <label>Tag</label>
+                    <input type="text" className="form-control" id="tag" name= "tag" placeholder="Enter tag " onChange={changeFunction} />
                 </div>
-                <button type="submit" className="btn btn-primary my-3">Submit</button>
+
+                <button type="submit" className="btn btn-primary my-3" onClick={handleSubmit}>Add Note</button>
             </form>
              
             {/* Used to call another notes component  */}

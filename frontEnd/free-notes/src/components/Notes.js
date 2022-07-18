@@ -12,9 +12,9 @@ function Notes() {
            </div>
            <div className="container">
             <div className='row my-3'>
-                {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}
+                 {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}
                 {context.notes.map((note) => {
-                    return <NoteItem note={note} />
+                    return <NoteItem key = {note._id} note={note} />
                 })}
             </div>
             </div>
