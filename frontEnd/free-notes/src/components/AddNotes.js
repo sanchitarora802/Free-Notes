@@ -23,7 +23,7 @@ function AddNotes() {
        e.preventDefault();
        console.log("Add button")
        // while calling the function always check the parameters to send. Dont always send the complete object. Check for the parameters it is accepting
-       contextUsed.addNote(demoNote.title,demoNote.description,demoNote.tag)
+       contextUsed.addNote(demoNote.title.toString(),demoNote.description.toString(),demoNote.tag.toString())
     }
 
 

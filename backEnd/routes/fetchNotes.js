@@ -43,9 +43,7 @@ router.get('/getNotes', fetchUserId, async function (req, res) {
     try {
         const fetchedUserId = req.incommingUser.id;
         const notes = await Note.find({ fetchedUserId });
-        res.json({
-            notes
-        })
+        res.json(notes)
     }
     catch (error) {
         console.log(error);
@@ -118,7 +116,6 @@ router.delete('/deleteNote/:id', fetchUserId, async function(req,res){
                 existingNote = await Note.findByIdAndDelete(req.params.id)
                 res.json({
                     "Message" : "Note Deleted Successfully",
-                    existingNote
                 })
         }
 
