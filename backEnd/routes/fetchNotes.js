@@ -58,11 +58,11 @@ router.put('/updateNote/:id', fetchUserId, async function(req,res){
 
         //create a new note of the incomming values
         const newNote = {};
-        if(req.body.title || req.body.description || req.body.tag)
+        if(req.body.etitle || req.body.edescription || req.body.etag)
         {
-              newNote.title = req.body.title,
-              newNote.description = req.body.description,
-              newNote.tag = req.body.tag
+              newNote.title = req.body.etitle,
+              newNote.description = req.body.edescription,
+              newNote.tag = req.body.etag
         }
 
         //verify the existing Note and let user update
@@ -70,7 +70,7 @@ router.put('/updateNote/:id', fetchUserId, async function(req,res){
         let existingNote = await Note.findById(req.params.id)
         if(!existingNote)
         {
-            return res.status(400).send("Not Found")
+            return res.status(400).send("Note Not Found")
         }
         else if(existingNote.userid.toString() !== fetchedUserId)
         {
@@ -81,9 +81,9 @@ router.put('/updateNote/:id', fetchUserId, async function(req,res){
         else
         {
                 existingNote = await Note.findByIdAndUpdate(req.params.id, {$set: newNote}, {new:true})
-                res.json({
+                res.json(
                     existingNote
-                })
+                )
         }
 
     } catch (error) {

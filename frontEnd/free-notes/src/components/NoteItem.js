@@ -8,7 +8,7 @@ function NoteItem(props) {
     function handleEdit(e){
         e.preventDefault();
         console.log("edit button")
-        contxtUsed.editNote(props.note)
+        props.openModal(props.note)
     }
 
     function handleDelete(e){

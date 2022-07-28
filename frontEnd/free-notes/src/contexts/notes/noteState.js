@@ -1,7 +1,6 @@
 import { useState } from "react"
 import noteContext from "./noteContext"
 
-
 const NoteState = (props) => {
 
     const host = "http://localhost:4000/api/fetchNotes"
@@ -11,13 +10,13 @@ const NoteState = (props) => {
 
     //Notes State
     const [notes, setNotes] = useState(notesStarting)
-    
+
     //Fetch all notes
     const getNotes = async () => {
-        const response = await fetch(`${host}/getNotes`,{
-            method:'GET',
+        const response = await fetch(`${host}/getNotes`, {
+            method: 'GET',
             headers: {
-                "content-type":"application/json",
+                "content-type": "application/json",
                 "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzYW5jaGl0IGFyb3JhIiwiZW1haWwiOiJzYW5jaGl0YXJvcmFAZ21haWwuY29tIiwiaWQiOiI2MmNkNDhlYjExMGI0YWY1YTA1NjMzMjkifSwiaWF0IjoxNjU3Njk4NDUyfQ.kC-dd1ChQ4Ys5huORQe1pmQoxrMo6AQb_ER69sGtN9o"
             }
         })
@@ -28,14 +27,15 @@ const NoteState = (props) => {
 
     // Add a new note 
     const addNote = async (title, description, tag) => {
-        tag === "" ? tag="General":tag=tag
-        const response = await fetch(`${host}/createNote`,{
-            method:'POST',
+        // eslint-disable-next-line
+        tag === "" ? tag = "General" : tag = tag
+        await fetch(`${host}/createNote`, {
+            method: 'POST',
             headers: {
-                "content-type":"application/json",
+                "content-type": "application/json",
                 "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzYW5jaGl0IGFyb3JhIiwiZW1haWwiOiJzYW5jaGl0YXJvcmFAZ21haWwuY29tIiwiaWQiOiI2MmNkNDhlYjExMGI0YWY1YTA1NjMzMjkifSwiaWF0IjoxNjU3Njk4NDUyfQ.kC-dd1ChQ4Ys5huORQe1pmQoxrMo6AQb_ER69sGtN9o"
             },
-            body: JSON.stringify({title,description,tag})
+            body: JSON.stringify({ title, description, tag })
         })
         const dummyNote =
         {
@@ -53,10 +53,10 @@ const NoteState = (props) => {
 
     // Delete a new note 
     const deleteNote = async (id) => {
-        const response = await fetch(`${host}/deleteNote/${id}`,{
-            method:'DELETE',
+        await fetch(`${host}/deleteNote/${id}`, {
+            method: 'DELETE',
             headers: {
-                "content-type":"application/json",
+                "content-type": "application/json",
                 "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzYW5jaGl0IGFyb3JhIiwiZW1haWwiOiJzYW5jaGl0YXJvcmFAZ21haWwuY29tIiwiaWQiOiI2MmNkNDhlYjExMGI0YWY1YTA1NjMzMjkifSwiaWF0IjoxNjU3Njk4NDUyfQ.kC-dd1ChQ4Ys5huORQe1pmQoxrMo6AQb_ER69sGtN9o"
             }
         })
@@ -66,17 +66,38 @@ const NoteState = (props) => {
         }))
     }
 
-    // Edit an existing note
-    const editNote = (note) => {
-        console.log("editing a existing note")
-        // console.log(note);
-        const element = note;
-        if (element._id === note._id) {
-            // console.log(element._id);
-            element.title = note.title;
-            element.description = note.description
-            element.tag = note.tag
+    // Edit an existing note   
+    const editNote = async (id, etitle, edescription, etag) => {
+        try {
+            await fetch(`${host}/updateNote/${id}`, {
+                method: 'PUT',
+                headers: {
+                    "content-type": "application/json",
+                    "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJzYW5jaGl0IGFyb3JhIiwiZW1haWwiOiJzYW5jaGl0YXJvcmFAZ21haWwuY29tIiwiaWQiOiI2MmNkNDhlYjExMGI0YWY1YTA1NjMzMjkifSwiaWF0IjoxNjU3Njk4NDUyfQ.kC-dd1ChQ4Ys5huORQe1pmQoxrMo6AQb_ER69sGtN9o"
+                },
+                body: JSON.stringify({ etitle, edescription, etag })
+            })
         }
+        catch {
+            console.log("error found")
+        }    
+
+            var newnotes = JSON.parse(JSON.stringify(notes))
+            console.log("editing a existing note")
+            console.log({ id, etitle, edescription, etag });
+            for (let index = 0; index < newnotes.length; index++) {
+                const element = newnotes[index];
+
+                if (element._id === id) {
+                    newnotes[index].title = etitle
+                    newnotes[index].description = edescription
+                    newnotes[index].tag = etag
+                    break;
+                }
+            }
+            console.log(newnotes)
+            setNotes(newnotes)
+            console.log("update successful")
     }
 
     return (
