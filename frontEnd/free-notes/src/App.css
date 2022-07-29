@@ -6,3 +6,7 @@
 i{
   cursor: pointer; 
 }
+
+.homestyle{
+  border: black 2px solid;
+}

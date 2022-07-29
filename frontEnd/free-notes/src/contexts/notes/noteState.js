@@ -37,18 +37,19 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({ title, description, tag })
         })
-        const dummyNote =
-        {
-            "_id": "62d1239befcebb8681125a8387",
-            "userid": "62cd48eb110b4af5a0563329",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "timeStamp": "2022-07-15T08:21:47.570Z",
-            "__v": 0
-        }
-        console.log("Adding a new note")
-        setNotes(notes.concat(dummyNote))
+    //     const dummyNote =
+    //     {
+    //         "_id": "62d1239befcebb8681125a8387",
+    //         "userid": "62cd48eb110b4af5a0563329",
+    //         "title": title,
+    //         "description": description,
+    //         "tag": tag,
+    //         "timeStamp": "2022-07-15T08:21:47.570Z",
+    //         "__v": 0
+    //     }
+    //     console.log("Adding a new note")
+    //     setNotes(notes.concat(dummyNote))
+            getNotes()
     }
 
     // Delete a new note 
@@ -61,9 +62,10 @@ const NoteState = (props) => {
             }
         })
         console.log("deleting a existing note")
-        setNotes(notes.filter((note) => {
-            return note._id !== id
-        }))
+        // setNotes(notes.filter((note) => {
+        //     return note._id !== id
+        // }))
+        getNotes()
     }
 
     // Edit an existing note   
@@ -82,21 +84,22 @@ const NoteState = (props) => {
             console.log("error found")
         }    
 
-            var newnotes = JSON.parse(JSON.stringify(notes))
-            console.log("editing a existing note")
-            console.log({ id, etitle, edescription, etag });
-            for (let index = 0; index < newnotes.length; index++) {
-                const element = newnotes[index];
+            // var newnotes = JSON.parse(JSON.stringify(notes))
+            // console.log("editing a existing note")
+            // console.log({ id, etitle, edescription, etag });
+            // for (let index = 0; index < newnotes.length; index++) {
+            //     const element = newnotes[index];
 
-                if (element._id === id) {
-                    newnotes[index].title = etitle
-                    newnotes[index].description = edescription
-                    newnotes[index].tag = etag
-                    break;
-                }
-            }
-            console.log(newnotes)
-            setNotes(newnotes)
+            //     if (element._id === id) {
+            //         newnotes[index].title = etitle
+            //         newnotes[index].description = edescription
+            //         newnotes[index].tag = etag
+            //         break;
+            //     }
+            // }
+            // console.log(newnotes)
+            // setNotes(newnotes)
+            getNotes()
             console.log("update successful")
     }
 

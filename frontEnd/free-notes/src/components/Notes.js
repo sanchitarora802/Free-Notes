@@ -92,6 +92,9 @@ function Notes() {
             </div>
             <div className="container">
                 <div className='row my-3'>
+                    <div className='container mx-2'>
+                    {context.notes.length === 0 ? "No Notes To Display":""}
+                    </div>
                     {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}
                     {context.notes.map((note) => {
                         return <NoteItem key={note._id} note={note} openModal={openModal} />
