@@ -22,9 +22,9 @@ function Notes() {
     function openModal(note)
     {
         ref.current.click()
-        console.log(note)
+        // console.log(note)
         setdemoNote(note)
-        console.log(demoNote)
+        // console.log(demoNote)
     }
 
     const changeFunction = (e) => {
@@ -33,9 +33,9 @@ function Notes() {
 
     const handleSubmit = (e) => {
        e.preventDefault();
-       console.log("edit submit button")
+    //    console.log("edit submit button")
        // while calling the function always check the parameters to send. Dont always send the complete object. Check for the parameters it is accepting
-       console.log("while passing in submit function",{demoNote})
+    //    console.log("while passing in submit function",{demoNote})
        context.editNote(demoNote._id,demoNote.title.toString(),demoNote.description.toString(),demoNote.tag.toString())
        handleClose();
     }
@@ -54,7 +54,7 @@ function Notes() {
       </Button>
         {/* Modal code with react bootstrap liberary  */}
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Edit Note</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -97,7 +97,7 @@ function Notes() {
                     </div>
                     {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}
                     {context.notes.map((note) => {
-                        return <NoteItem key={note._id} note={note} openModal={openModal} />
+                        return <NoteItem  key={note._id} note={note} openModal={openModal} />
                     })}
                 </div>
             </div>

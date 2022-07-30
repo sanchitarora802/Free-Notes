@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function NavBar() {
+function NavBar(props) {
     // Used for checking which page is active.
     // useEffect(() => {
     //     console.log(location.pathname)
@@ -38,9 +38,12 @@ function NavBar() {
             localStorage.setItem('token', fetchedData.authtoken)
             handleLoginModalClose();
             navigate("../addNotes", { replace: true });
+            props.showAlert("Login Successfully","success")
         }
         else{
-            console.log(fetchedData.errors)
+            handleLoginModalClose();
+            props.showAlert(fetchedData.errors,"danger")
+            // console.log(fetchedData.errors)
         }
     }
 
@@ -74,10 +77,13 @@ function NavBar() {
             localStorage.setItem('token', fetchedData.authtoken)
             handleSignupModalClose();
             navigate("../addNotes", { replace: true });
+            props.showAlert("Account Created Successfully","success")
         }
         else
         {
-            console.log(fetchedData.errors)
+            handleSignupModalClose();
+            props.showAlert(fetchedData.errors,"danger")
+            // console.log(fetchedData.errors)
         }
     }
 
@@ -171,8 +177,8 @@ function NavBar() {
                         </li> */}
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
-                        <Link type="button" className="btn btn-outline-primary mx-2" to="/" onClick={handleLoginModalShow}>LogIn</Link>
-                        <Link type="button" className="btn btn-outline-primary" to="/" onClick={handleSignupModalShow}>SignUp</Link>
+                        <Link type="button" className="btn btn-outline-primary mx-2" to="#" onClick={handleLoginModalShow}>LogIn</Link>
+                        <Link type="button" className="btn btn-outline-primary" to="#" onClick={handleSignupModalShow}>SignUp</Link>
                     </form>
                 </div>
             </nav>

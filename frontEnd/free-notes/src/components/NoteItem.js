@@ -7,13 +7,13 @@ function NoteItem(props) {
     
     function handleEdit(e){
         e.preventDefault();
-        console.log("edit button")
+        // console.log("edit button")
         props.openModal(props.note)
     }
 
     function handleDelete(e){
         e.preventDefault();
-        console.log("delete button")
+        // console.log("delete button")
         contxtUsed.deleteNote(props.note._id)
     }
 

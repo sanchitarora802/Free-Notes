@@ -2,7 +2,7 @@ import React, {useContext,useState} from 'react'
 import Notes from './Notes'
 import contextPath from '../contexts/notes/noteContext'
 
-function AddNotes() {
+function AddNotes(props) {
 
     const contextUsed = useContext(contextPath)
     
@@ -57,7 +57,7 @@ function AddNotes() {
             </form>
              
             {/* Used to call another notes component  */}
-            <Notes/>   
+            <Notes />   
         </>
     )
 }
