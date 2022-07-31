@@ -85,7 +85,7 @@ router.post('/signIn',
       const data = {
         user: {
           name: incomingUser.name,
-          email: req.body.email,
+          email: req.body.email.toString(),
           id: incomingUser.id
         }
       }

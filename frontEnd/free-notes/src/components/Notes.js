@@ -4,8 +4,11 @@ import noteContext from '../contexts/notes/noteContext'
 import NoteItem from './NoteItem'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
-function Notes() {
+function Notes(props) {
+
+    let navigate = useNavigate();
     const [demoNote, setdemoNote] = new useState({
         id:"",
         title: "",
@@ -41,7 +44,15 @@ function Notes() {
     }
 
     useEffect(() => {
-        context.getNotes()
+        if(localStorage.getItem('token'))
+        {
+            context.getNotes()
+        }
+        else
+        {
+            navigate("../", { replace: true });
+            props.showAlert("Please Login to use Free-Notes","danger")
+        }
         // eslint-disable-next-line
     }, [])
     return (

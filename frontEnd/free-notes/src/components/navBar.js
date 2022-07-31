@@ -87,7 +87,11 @@ function NavBar(props) {
         }
     }
 
-   
+   const handleLogout = () =>{
+        navigate("../", { replace: true });
+        props.showAlert("Logout Successfully","success")
+        localStorage.removeItem('token')
+   }
 
     let location = useLocation();
     return (
@@ -158,8 +162,8 @@ function NavBar(props) {
                 </Modal>
             </div>
 
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <Link className="navbar-brand" to="/">Free-Notes</Link>
+            <nav className="navbar navbar-expand-lg navbar-primary bg-primary">
+                <Link className="navbar-brand text-white" to="/">Free-Notes</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -167,19 +171,19 @@ function NavBar(props) {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className={`nav-item ${location.pathname === "/addnotes" ? "active" : ""} `}>
-                            <Link className="nav-link" to="/addNotes">AddNotes </Link>
+                            <Link className="nav-link text-white" to="/addNotes">AddNotes </Link>
                         </li>
                         <li className={`nav-item ${location.pathname === "/about" ? "active" : ""} `}>
-                            <Link className="nav-link" to="/about">About</Link>
+                            <Link className="nav-link text-white" to="/about">About</Link>
                         </li>
                         {/* <li className="nav-item">
                             <Link className="nav-link disabled" to="/home">Disabled</a>
                         </li> */}
                     </ul>
-                    <form className="form-inline my-2 my-lg-0">
-                        <Link type="button" className="btn btn-outline-primary mx-2" to="#" onClick={handleLoginModalShow}>LogIn</Link>
-                        <Link type="button" className="btn btn-outline-primary" to="#" onClick={handleSignupModalShow}>SignUp</Link>
-                    </form>
+                    {!localStorage.getItem('token') ? <form className="form-inline my-2 my-lg-0">
+                        <Link type="button" className="btn btn-outline-primary text-white mx-2" to="#" onClick={handleLoginModalShow}>LogIn</Link>
+                        <Link type="button" className="btn btn-outline-primary text-white" to="#" onClick={handleSignupModalShow}>SignUp</Link>
+                    </form>:<Link type="button" className="btn btn-outline-primary text-white mx-2" to="/" onClick={handleLogout}>Logout</Link> }
                 </div>
             </nav>
         </>

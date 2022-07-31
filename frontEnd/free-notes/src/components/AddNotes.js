@@ -21,7 +21,7 @@ function AddNotes(props) {
 
     const handleSubmit = (e) => {
        e.preventDefault();
-       console.log("Add button")
+    //    console.log("Add button")
        // while calling the function always check the parameters to send. Dont always send the complete object. Check for the parameters it is accepting
        contextUsed.addNote(demoNote.title.toString(),demoNote.description.toString(),demoNote.tag.toString())
        setdemoNote({ title: "",
@@ -57,7 +57,7 @@ function AddNotes(props) {
             </form>
              
             {/* Used to call another notes component  */}
-            <Notes />   
+            <Notes showAlert={props.showAlert} />   
         </>
     )
 }
