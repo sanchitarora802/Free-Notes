@@ -2,6 +2,7 @@ import { React, useState } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import cogoToast from 'cogo-toast';
 
 function NavBar(props) {
     // Used for checking which page is active.
@@ -50,7 +51,8 @@ function NavBar(props) {
     const [signupform, setsignupform] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        cpassword:""
     })
     const [showsignupmodal, setsignupmodalShow] = useState(false);
     const handleSignupModalClose = () => setsignupmodalShow(false);
@@ -64,6 +66,10 @@ function NavBar(props) {
         e.preventDefault();
         // console.log("signup modal submit")
         // APi call
+        if(signupform.password !== signupform.cpassword)
+        {
+            return cogoToast.error("Password does not Match!!")
+        }
         const response = await fetch(`http://localhost:4000/api/auth/signUp`, {
             method: 'POST',
             headers: {
@@ -73,10 +79,10 @@ function NavBar(props) {
         })
         const fetchedData = await response.json()
         //Save authtoken in local storage
+    
         if (fetchedData.message) {
-            localStorage.setItem('token', fetchedData.authtoken)
             handleSignupModalClose();
-            navigate("../addNotes", { replace: true });
+            navigate("../", { replace: true });
             props.showAlert("Account Created Successfully","success")
         }
         else
@@ -146,8 +152,9 @@ function NavBar(props) {
                                 <input type="password" className="form-control" id="password" name='password' placeholder="Enter Password" onChange={SigupchangeFunction} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="cpassword">Password</label>
-                                <input type="cpassword" className="form-control" id="cpassword" name='cpassword' placeholder="Confirm Password" onChange={SigupchangeFunction} />
+                                <label htmlFor="cpassword">Confirm Password</label>
+                                <input type="password" className="form-control" id="cpassword" name='cpassword' placeholder="Confirm Password" onChange={SigupchangeFunction} />
+                                <div className='check mx-2 text-danger'></div>
                             </div>
                         </form>
                     </Modal.Body>

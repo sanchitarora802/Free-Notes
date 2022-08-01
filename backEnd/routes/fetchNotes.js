@@ -26,9 +26,7 @@ router.post('/createNote', fetchUserId, [
 
         const savedNote = await incommingNote.save();
 
-        res.json({
-            savedNote
-        })
+        res.json(savedNote)
     }
     catch (error) {
         console.log(error);

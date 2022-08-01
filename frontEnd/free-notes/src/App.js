@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import NoteState from './contexts/notes/noteState';
 import AddNotes from './components/AddNotes';
 import { useState } from 'react';
+import Footer from './components/Footer';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -33,6 +34,7 @@ function App() {
       <Route exact path='/about' element = {<About />} />
      </Routes>
     </Router>
+    <Footer />
     </NoteState>
     </>
   );

@@ -34,7 +34,7 @@ const NoteState = (props) => {
         // eslint-disable-next-line
         tag === "" ? tag = "General" : tag = tag
         try {
-            await fetch(`${host}/createNote`, {
+           const response = await fetch(`${host}/createNote`, {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json",
@@ -43,8 +43,12 @@ const NoteState = (props) => {
                 body: JSON.stringify({ title, description, tag })
 
             })
-            getNotes()
-            props.showAlert("Note Added Successfully", "success")
+            console.log(response)
+            if(response._id !== '')
+            {
+                getNotes()
+                props.showAlert("Note Added Successfully", "success")
+            }
         }
         catch {
             props.showAlert("Please try again", "danger")
@@ -66,15 +70,18 @@ const NoteState = (props) => {
     // Delete a new note 
     const deleteNote = async (id) => {
         try {
-            await fetch(`${host}/deleteNote/${id}`, {
+         const response = await fetch(`${host}/deleteNote/${id}`, {
                 method: 'DELETE',
                 headers: {
                     "content-type": "application/json",
                     "auth-token": localStorage.getItem('token')
                 }
             })
-            getNotes()
-            props.showAlert("Note Deleted Successfully", "success")
+            if(response.Message !== '')
+            {
+                getNotes()
+                props.showAlert("Note Deleted Successfully", "success")
+            }
         }
         catch {
             props.showAlert("Please try again", "danger")
@@ -89,7 +96,7 @@ const NoteState = (props) => {
     // Edit an existing note   
     const editNote = async (id, etitle, edescription, etag) => {
         try {
-            await fetch(`${host}/updateNote/${id}`, {
+          const response = await fetch(`${host}/updateNote/${id}`, {
                 method: 'PUT',
                 headers: {
                     "content-type": "application/json",
@@ -97,8 +104,11 @@ const NoteState = (props) => {
                 },
                 body: JSON.stringify({ etitle, edescription, etag })
             })
+            if(response._id !== '')
+            {
             getNotes()
             props.showAlert("Note Updated Successfully", "success")
+            }
         }
         catch {
             props.showAlert("Please try again", "danger")

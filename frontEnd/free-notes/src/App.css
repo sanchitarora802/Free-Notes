@@ -10,3 +10,8 @@ i{
 .homestyle{
   border: black 2px solid;
 }
+
+.photodiv{
+  width: 60;
+  height: 60;
+}
