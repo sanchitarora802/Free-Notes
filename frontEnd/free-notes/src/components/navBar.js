@@ -1,8 +1,10 @@
 import { React, useState } from 'react'
+import jwt_decode from "jwt-decode";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import cogoToast from 'cogo-toast';
+import "../App.css"
 
 function NavBar(props) {
     // Used for checking which page is active.
@@ -39,11 +41,11 @@ function NavBar(props) {
             localStorage.setItem('token', fetchedData.authtoken)
             handleLoginModalClose();
             navigate("../addNotes", { replace: true });
-            props.showAlert("Login Successfully","success")
+            props.showAlert("Login Successfully", "success")
         }
-        else{
+        else {
             handleLoginModalClose();
-            props.showAlert(fetchedData.errors,"danger")
+            props.showAlert(fetchedData.errors, "danger")
             // console.log(fetchedData.errors)
         }
     }
@@ -52,7 +54,7 @@ function NavBar(props) {
         name: "",
         email: "",
         password: "",
-        cpassword:""
+        cpassword: ""
     })
     const [showsignupmodal, setsignupmodalShow] = useState(false);
     const handleSignupModalClose = () => setsignupmodalShow(false);
@@ -66,8 +68,7 @@ function NavBar(props) {
         e.preventDefault();
         // console.log("signup modal submit")
         // APi call
-        if(signupform.password !== signupform.cpassword)
-        {
+        if (signupform.password !== signupform.cpassword) {
             return cogoToast.error("Password does not Match!!")
         }
         const response = await fetch(`http://localhost:4000/api/auth/signUp`, {
@@ -79,25 +80,34 @@ function NavBar(props) {
         })
         const fetchedData = await response.json()
         //Save authtoken in local storage
-    
+
         if (fetchedData.message) {
             handleSignupModalClose();
             navigate("../", { replace: true });
-            props.showAlert("Account Created Successfully","success")
+            props.showAlert("Account Created Successfully", "success")
         }
-        else
-        {
+        else {
             handleSignupModalClose();
-            props.showAlert(fetchedData.errors,"danger")
+            props.showAlert(fetchedData.errors, "danger")
             // console.log(fetchedData.errors)
         }
     }
 
-   const handleLogout = () =>{
+    const handleLogout = () => {
         navigate("../", { replace: true });
-        props.showAlert("Logout Successfully","success")
+        props.showAlert("Logout Successfully", "success")
         localStorage.removeItem('token')
-   }
+    }
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    
+    let decode
+    if(localStorage.getItem('token'))
+    {
+    decode = jwt_decode(localStorage.getItem('token'));
+    }
 
     let location = useLocation();
     return (
@@ -187,10 +197,18 @@ function NavBar(props) {
                             <Link className="nav-link disabled" to="/home">Disabled</a>
                         </li> */}
                     </ul>
+                    
                     {!localStorage.getItem('token') ? <form className="form-inline my-2 my-lg-0">
                         <Link type="button" className="btn btn-outline-primary text-white mx-2" to="#" onClick={handleLoginModalShow}>LogIn</Link>
                         <Link type="button" className="btn btn-outline-primary text-white" to="#" onClick={handleSignupModalShow}>SignUp</Link>
-                    </form>:<Link type="button" className="btn btn-outline-primary text-white mx-2" to="/" onClick={handleLogout}>Logout</Link> }
+                    </form> : <div className="dropdown">
+                        <label onClick={myFunction} className="dropbtn text-white">Welcome {decode.user.name}</label>
+                        <div id="myDropdown" className="dropdown-content">
+                            <a href="/">My Profile</a>
+                            <a href="/">Change Password</a>
+                            <a href="/" onClick={handleLogout}>Logout</a>
+                        </div>
+                    </div>}
                 </div>
             </nav>
         </>
