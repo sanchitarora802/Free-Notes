@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Footer = () => {
+const Footer = (props) => {
     return (
         <>
             {/* <!-- Footer --> */}
-            <footer className="page-footer bg-primary pt-4">
+            <footer className={`page-footer bg-${props.mode} pt-4`}>
 
                 <div className='container text-white align-items-center'>
                     <div className='align-middle text-center'>
@@ -16,8 +16,8 @@ const Footer = () => {
                 </div>
                 
                 {/* <!-- Copyright --> */}
-                <div className="footer-copyright text-center text-white py-3">© 2020 Copyright:
-                    <a className='text-white' href="/"> Free-Notes.com</a>
+                <div className={`footer-copyright text-center text-${props.textcolor} py-3`}>© 2020 Copyright:
+                    <a className={`text-${props.textcolor}`} href="/"> Free-Notes.com</a>
                 </div>
 
             </footer>

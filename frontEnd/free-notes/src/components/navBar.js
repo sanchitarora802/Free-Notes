@@ -12,6 +12,7 @@ function NavBar(props) {
     //     console.log(location.pathname)
     // })
 
+
     let navigate = useNavigate();
     const [credentials, setcredentials] = useState({
         email: "",
@@ -102,11 +103,10 @@ function NavBar(props) {
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
-    
+
     let decode
-    if(localStorage.getItem('token'))
-    {
-    decode = jwt_decode(localStorage.getItem('token'));
+    if (localStorage.getItem('token')) {
+        decode = jwt_decode(localStorage.getItem('token'));
     }
 
     let location = useLocation();
@@ -179,8 +179,8 @@ function NavBar(props) {
                 </Modal>
             </div>
 
-            <nav className="navbar navbar-expand-lg navbar-primary bg-primary">
-                <Link className="navbar-brand text-white" to="/">Free-Notes</Link>
+            <nav className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
+                <Link className={`navbar-brand text-${props.textcolor}`} to="/">Free-Notes</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -188,21 +188,27 @@ function NavBar(props) {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className={`nav-item ${location.pathname === "/addnotes" ? "active" : ""} `}>
-                            <Link className="nav-link text-white" to="/addNotes">AddNotes </Link>
+                            <Link className={` nav-link text-${props.textcolor}`} to="/addNotes" >AddNotes </Link>
                         </li>
                         <li className={`nav-item ${location.pathname === "/about" ? "active" : ""} `}>
-                            <Link className="nav-link text-white" to="/about">About</Link>
+                            <Link className={`nav-link text-${props.textcolor}`} to="/about">About</Link>
                         </li>
                         {/* <li className="nav-item">
                             <Link className="nav-link disabled" to="/home">Disabled</a>
                         </li> */}
                     </ul>
-                    
+
+                    <div className={`form-check form-switch text-${props.mode === `light` ? `dark` : `light`}`}>
+                        <input className="form-check-input" onClick={props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"></input>
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
+                    </div>
+
+
                     {!localStorage.getItem('token') ? <form className="form-inline my-2 my-lg-0">
-                        <Link type="button" className="btn btn-outline-primary text-white mx-2" to="#" onClick={handleLoginModalShow}>LogIn</Link>
-                        <Link type="button" className="btn btn-outline-primary text-white" to="#" onClick={handleSignupModalShow}>SignUp</Link>
+                        <Link type="button" className={`btn btn-outline-primary text-${props.textcolor} mx-2`} to="#" onClick={handleLoginModalShow}>LogIn</Link>
+                        <Link type="button" className={`btn btn-outline-primary text-${props.textcolor}`} to="#" onClick={handleSignupModalShow}>SignUp</Link>
                     </form> : <div className="dropdown">
-                        <label onClick={myFunction} className="dropbtn text-white">Welcome {decode.user.name}</label>
+                        <label onClick={myFunction} className={`dropbtn text-${props.textcolor}`}>Welcome {decode.user.name}</label>
                         <div id="myDropdown" className="dropdown-content">
                             <a href="/">My Profile</a>
                             <a href="/">Change Password</a>

@@ -4,10 +4,10 @@ import login from '../images/login.jpg'
 import edit from '../images/edit.png'
 import done from '../images/done.jpg'
 
-function home() {
+function home(props) {
   return (
     <>
-     <div className='container'>
+     <div className={`container text-${props.textheadingcolor}`}>
         <h1><center>Welecome to Free-Notes</center></h1>
      </div>
 
@@ -26,15 +26,15 @@ function home() {
      </div>
 
      <div className='row'>
-        <div className='col-md-3 offset-md-1'>
+        <div className={`text-${props.textheadingcolor} col-md-3 offset-md-1`}>
         <h2 className='mx-5'>Signup/Login</h2>
         </div>
 
-        <div className='col-md-3 offset-md-1'>
+        <div className={`text-${props.textheadingcolor} col-md-3 offset-md-1`}>
         <h2>Add/Modify Notes</h2>
         </div>
 
-        <div className='col-md-3 offset-md-1 my-3'>
+        <div className={`text-${props.textheadingcolor} col-md-3 offset-md-1 my-3`}>
         <h2>Mark as Completed</h2>
         </div>
      </div>

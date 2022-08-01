@@ -98,7 +98,7 @@ function Notes(props) {
       </div>
 
 
-            <div className='container'>
+            <div className={`container text-${props.textheadingcolor}`}>
                 <h2>Available Notes</h2>
             </div>
             <div className="container">
@@ -108,7 +108,7 @@ function Notes(props) {
                     </div>
                     {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}
                     {context.notes.map((note) => {
-                        return <NoteItem  key={note._id} note={note} openModal={openModal} />
+                        return <NoteItem  mode = {props.mode} textheadingcolor={props.textheadingcolor}  key={note._id} note={note} openModal={openModal}/>
                     })}
                 </div>
             </div>

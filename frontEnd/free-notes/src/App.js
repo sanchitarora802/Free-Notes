@@ -22,19 +22,40 @@ function App() {
       }, 1500);
   }
 
+  const [mode,setMode] = useState('primary'); //state 1 saved
+  const [textcolor,settextcolor] = useState('white'); //state 2 saved
+  const [textheadingcolor,settextheadingcolor] = useState('black'); //state 3 saved
+
+
+  const toggleMode = () =>{
+     if(mode === 'primary'){
+         setMode('dark')
+         document.body.style.backgroundColor = 'black';
+         settextcolor('warning')
+         settextheadingcolor('warning')
+     }
+     else{
+         setMode('primary')
+         document.body.style.backgroundColor = 'white';
+         settextcolor('white')
+         settextheadingcolor('black')
+     }
+  }   
+
+
   return (
     <>
     <NoteState showAlert={showAlert} >
     <Router>
-    <Navbar  showAlert={showAlert} />
+    <Navbar  showAlert={showAlert}  mode = {mode} textcolor={textcolor} toggleMode = {toggleMode} />
     <Alert alert={alert} />
      <Routes>
-     <Route exact path='/' element = {<Home />} />
-      <Route exact path='/addNotes' element = {<AddNotes showAlert={showAlert}/>} />
+     <Route exact path='/' element = {<Home  mode = {mode} textcolor={textcolor} textheadingcolor={textheadingcolor} />} />
+      <Route exact path='/addNotes' element = {<AddNotes  mode = {mode} textcolor={textcolor} textheadingcolor={textheadingcolor} showAlert={showAlert}/>} />
       <Route exact path='/about' element = {<About />} />
      </Routes>
     </Router>
-    <Footer />
+    <Footer mode = {mode} textcolor={textcolor} />
     </NoteState>
     </>
   );

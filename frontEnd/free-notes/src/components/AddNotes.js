@@ -33,7 +33,7 @@ function AddNotes(props) {
 
     return (
         <>
-            <div className='container my-3'>
+            <div className={`container my-3 text-${props.textheadingcolor} `}>
                 <h2>Add Your Notes Here</h2>
             </div>
 
@@ -53,11 +53,11 @@ function AddNotes(props) {
                     <input type="text" className="form-control" id="tag" name= "tag" placeholder="Enter tag" value={demoNote.tag} onChange={changeFunction} />
                 </div>
 
-                <button type="submit"  className="btn btn-primary my-3" onClick={handleSubmit}>Add Note</button>
+                <button type="submit"  className={`btn btn-${props.textcolor} my-3`} onClick={handleSubmit}>Add Note</button>
             </form>
              
             {/* Used to call another notes component  */}
-            <Notes showAlert={props.showAlert} />   
+            <Notes showAlert={props.showAlert} textcolor={props.textcolor} textheadingcolor={props.textheadingcolor} mode = {props.mode} />   
         </>
     )
 }
