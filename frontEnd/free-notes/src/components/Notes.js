@@ -103,7 +103,7 @@ function Notes(props) {
             </div>
             <div className="container">
                 <div className='row my-3'>
-                    <div className='container mx-2'>
+                    <div className={`container mx-2 text-${props.textheadingcolor} `}>
                     {context.notes.length === 0 ? "No Notes To Display":""}
                     </div>
                     {/* NoteItem is seprate component in which is used by sending props using map function and create new NoteItems. */}

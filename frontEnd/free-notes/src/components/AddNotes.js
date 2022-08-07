@@ -38,17 +38,17 @@ function AddNotes(props) {
             </div>
 
             <form className="container my-3">
-                <div className="form-group">
+                <div className={`form-group, text-${props.textheadingcolor}`}>
                     <label>Title</label>
                     <input type="text" className="form-control" id="title" name= "title" placeholder="Enter title" value={demoNote.title} onChange={changeFunction}/>
                 </div>
 
-                <div className="form-group">
+                <div className={`form-group, text-${props.textheadingcolor}`}>
                     <label>Description</label>
                     <input type="text" className="form-control" id="description" name= "description" placeholder="Enter Description" value={demoNote.description} onChange={changeFunction} />
                 </div>
                
-                <div className="form-group">
+                <div className={`form-group, text-${props.textheadingcolor}`}>
                     <label>Tag</label>
                     <input type="text" className="form-control" id="tag" name= "tag" placeholder="Enter tag" value={demoNote.tag} onChange={changeFunction} />
                 </div>

@@ -45,8 +45,9 @@ function NavBar(props) {
             props.showAlert("Login Successfully", "success")
         }
         else {
-            handleLoginModalClose();
-            props.showAlert(fetchedData.errors, "danger")
+            // handleLoginModalClose();
+            // props.showAlert(, "danger")
+            return cogoToast.error(fetchedData.errors)
             // console.log(fetchedData.errors)
         }
     }
@@ -69,7 +70,8 @@ function NavBar(props) {
         e.preventDefault();
         // console.log("signup modal submit")
         // APi call
-        if (signupform.password !== signupform.cpassword) {
+        if (signupform.password.toString() !== signupform.cpassword.toString()) {
+            // console.log(signupform.password,signupform.cpassword)
             return cogoToast.error("Password does not Match!!")
         }
         const response = await fetch(`http://localhost:4000/api/auth/signUp`, {
@@ -88,8 +90,10 @@ function NavBar(props) {
             props.showAlert("Account Created Successfully", "success")
         }
         else {
-            handleSignupModalClose();
-            props.showAlert(fetchedData.errors, "danger")
+            // handleSignupModalClose();
+            if(fetchedData.errors.param === 'name')
+            return cogoToast.error('Please enter name greater than 3 char')
+
             // console.log(fetchedData.errors)
         }
     }
