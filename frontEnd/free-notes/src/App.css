@@ -2,6 +2,26 @@
   text-align: center;
 }
 
+
+body, #root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}
+
+/* Make the footer stick to the bottom */
+footer {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
 /* Used in fontawesom */
 i{
   cursor: pointer; 
