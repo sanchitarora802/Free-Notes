@@ -2,7 +2,7 @@ import "./App.css";
 import Home from "./components/home";
 import Navbar from "./components/navBar";
 import Alert from "./components/Alert";
-import About from "./components/about";
+// import About from "./components/about";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NoteState from "./contexts/notes/noteState";
 import AddNotes from "./components/AddNotes";

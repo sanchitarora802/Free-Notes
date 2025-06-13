@@ -8,6 +8,19 @@ connectToMongo();
 const app = express();
 const port = 4000;
 
+// Update CORS to allow only your frontend domain
+const allowedOrigins = [
+  "https://free-notes-delta.vercel.app/",
+  "http://localhost:3000", // for local development
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.use(cors());

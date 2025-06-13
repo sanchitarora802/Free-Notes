@@ -3,13 +3,10 @@ import noteContext from "./noteContext";
 import jwt_decode from "jwt-decode";
 
 const NoteState = (props) => {
-  const host = "http://localhost:4000/api/fetchNotes";
-
-  //create a new state  {Hard coded value because for api tests}
-  const notesStarting = [];
+  const host = `${process.env.REACT_APP_BE_DOMAIN}/api/fetchNotes`;
 
   //Notes State
-  const [notes, setNotes] = useState(notesStarting);
+  const [notes, setNotes] = useState([]);
 
   //Fetch all notes
   const getNotes = async () => {
@@ -24,7 +21,7 @@ const NoteState = (props) => {
     });
     const fetchedData = await response.json();
     // console.log(fetchedData)
-    setNotes(fetchedData);
+    setNotes(Array.isArray(fetchedData) || []);
     // console.log(notes,notesStarting)
   };
 

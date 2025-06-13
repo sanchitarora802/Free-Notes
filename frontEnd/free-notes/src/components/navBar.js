@@ -28,16 +28,19 @@ function NavBar(props) {
   const handleLoginModalSubmit = async (e) => {
     e.preventDefault();
     // APi call
-    const response = await fetch(`http://localhost:4000/api/auth/signIn`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email.toString(),
-        password: credentials.password.toString(),
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_DOMAIN}/api/auth/signIn`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          email: credentials.email.toString(),
+          password: credentials.password.toString(),
+        }),
+      }
+    );
     const fetchedData = await response.json();
     //Save authtoken in local storage
     if (fetchedData.message) {
@@ -75,17 +78,20 @@ function NavBar(props) {
       // console.log(signupform.password,signupform.cpassword)
       return cogoToast.error("Password does not Match!!");
     }
-    const response = await fetch(`http://localhost:4000/api/auth/signUp`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        name: signupform.name.toString(),
-        email: signupform.email.toString(),
-        password: signupform.password.toString(),
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BE_DOMAIN}/api/auth/signUp`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          name: signupform.name.toString(),
+          email: signupform.email.toString(),
+          password: signupform.password.toString(),
+        }),
+      }
+    );
     const fetchedData = await response.json();
     //Save authtoken in local storage
 
@@ -107,10 +113,6 @@ function NavBar(props) {
     props.showAlert("Logout Successfully", "success");
     localStorage.removeItem("token");
   };
-
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
 
   let decode;
   if (localStorage.getItem("token")) {
@@ -264,12 +266,6 @@ function NavBar(props) {
                 AddNotes{" "}
               </Link>
             </li>
-            {/* <li className={`nav-item ${location.pathname === "/about" ? "active" : ""} `}>
-                            <Link className={`nav-link text-${props.textcolor}`} to="/about">About</Link>
-                        </li> */}
-            {/* <li className="nav-item">
-                            <Link className="nav-link disabled" to="/home">Disabled</a>
-                        </li> */}
           </ul>
 
           <div
@@ -313,19 +309,7 @@ function NavBar(props) {
             </form>
           ) : (
             <div className="dropdown">
-              <label
-                onClick={myFunction}
-                className={`dropbtn text-${props.textcolor}`}
-              >
-                Welcome {decode.user.name}
-              </label>
-              <div id="myDropdown" className="dropdown-content">
-                <a href="/">My Profile</a>
-                <a href="/">Change Password</a>
-                <a href="/" onClick={handleLogout}>
-                  Logout
-                </a>
-              </div>
+              <div onClick={handleLogout}>Logout</div>
             </div>
           )}
         </div>
