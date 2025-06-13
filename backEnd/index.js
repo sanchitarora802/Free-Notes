@@ -6,7 +6,7 @@ var cors = require("cors");
 connectToMongo();
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // Update CORS to allow only your frontend domain
 const allowedOrigins = [
