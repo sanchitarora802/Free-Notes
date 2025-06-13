@@ -127,4 +127,6 @@ router.post("/getUser", fetchUserId, async (req, res) => {
   }
 });
 
+router.get("/ping", (req, res) => res.send("pong"));
+
 module.exports = router;
