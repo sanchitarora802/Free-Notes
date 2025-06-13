@@ -13,7 +13,7 @@ const NoteState = (props) => {
     const decode = jwt_decode(localStorage.getItem("token"));
     // console.log(decode.user.id)
     const response = await fetch(`${host}/getNotes/${decode.user.id}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "content-type": "application/json",
         "auth-token": localStorage.getItem("token"),
