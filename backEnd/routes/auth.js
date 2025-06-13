@@ -1,19 +1,20 @@
-const router = require('express').Router();
-const { body, validationResult } = require('express-validator');
-const User = require('../models/UserSchema');
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
-const fetchUserId = require('../middlewares/fetchUserId');
-
-const secretKey = "ThisKeyIsUsedForJwtTokenForTestingWebsite"
+const router = require("express").Router();
+const { body, validationResult } = require("express-validator");
+const User = require("../models/UserSchema");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const fetchUserId = require("../middlewares/fetchUserId");
 
 //  console.log("check1")
 
 //Route 1
-router.post('/signUp',
-  [body('name', 'Name should be greater than 3').isLength({ min: 3 }),
-  body('email', 'Please enter a valid email').isEmail(),
-  body('password', 'Password should be greater than 3').isLength({ min: 5 })],
+router.post(
+  "/signUp",
+  [
+    body("name", "Name should be greater than 3").isLength({ min: 3 }),
+    body("email", "Please enter a valid email").isEmail(),
+    body("password", "Password should be greater than 3").isLength({ min: 5 }),
+  ],
   async (req, res) => {
     try {
       // console.log("check2")
@@ -25,42 +26,46 @@ router.post('/signUp',
       let incomingUser = await User.findOne({ email: req.body.email });
       // console.log(incomingUser)
       if (incomingUser)
-        return res.status(400).json({ "errors": "Email already registered" });
+        return res.status(400).json({ errors: "Email already registered" });
 
       const salt = await bcrypt.genSalt(10);
-      const secPassword = await bcrypt.hash(req.body.password, salt)
+      const secPassword = await bcrypt.hash(req.body.password, salt);
       // console.log("check4")
       incomingUser = await User.create({
         name: req.body.name,
         email: req.body.email,
-        password: secPassword
-      })
+        password: secPassword,
+      });
 
       //create data for jwt. Always add the the data which will be unique in DB.
       const data = {
         user: {
           name: req.body.name,
           id: req.body.email,
-        }
-      }
+        },
+      };
 
-      const authtoken = jwt.sign(data, secretKey);
+      const authtoken = jwt.sign(data, process.env.JWT_SECRET);
 
       res.json({
         authtoken: authtoken,
-        message: "Registered Successfully"
+        message: "Registered Successfully",
       });
+    } catch {
+      return res
+        .status(400)
+        .json({ errors: "Some error occured please try again later" });
     }
-    catch
-    {
-      return res.status(400).json({ "errors": "Some error occured please try again later" });
-    }
-  })
+  }
+);
 
 //Route 2
-router.post('/signIn',
-  [body('email', 'Email or Password is incorrect').isEmail(),
-  body('password', 'Password can not be empty').exists()],
+router.post(
+  "/signIn",
+  [
+    body("email", "Email or Password is incorrect").isEmail(),
+    body("password", "Password can not be empty").exists(),
+  ],
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -73,45 +78,53 @@ router.post('/signIn',
       let incomingUser = await User.findOne({ email: req.body.email });
       // console.log(incomingUser)
       if (!incomingUser)
-        return res.status(400).json({ "errors": "Email or Password is incorrect" });
+        return res
+          .status(400)
+          .json({ errors: "Email or Password is incorrect" });
 
-      //check if the incomming password and hashed password is same for login    
-      const comparePassword = await bcrypt.compare(req.body.password, incomingUser.password)
+      //check if the incomming password and hashed password is same for login
+      const comparePassword = await bcrypt.compare(
+        req.body.password,
+        incomingUser.password
+      );
       if (!comparePassword) {
-        return res.status(400).json({ "errors": "Email or Password is incorrect" });
+        return res
+          .status(400)
+          .json({ errors: "Email or Password is incorrect" });
       }
-
 
       const data = {
         user: {
           name: incomingUser.name,
           email: req.body.email.toString(),
-          id: incomingUser.id
-        }
-      }
-      const authtoken = jwt.sign(data, secretKey);
+          id: incomingUser.id,
+        },
+      };
+      const authtoken = jwt.sign(data, process.env.JWT_SECRET);
       res.json({
         authtoken: authtoken,
-        message: "Login Successful"
+        message: "Login Successful",
       });
+    } catch {
+      return res
+        .status(400)
+        .json({ errors: "Some error occured please try again later" });
     }
-    catch {
-      return res.status(400).json({ "errors": "Some error occured please try again later" });
-    }
-  })
+  }
+);
 
-//Route 3 
-router.post('/getUser', fetchUserId, async (req, res) => {
+//Route 3
+router.post("/getUser", fetchUserId, async (req, res) => {
   try {
-    let fetchedUserId = req.incommingUser.id
+    let fetchedUserId = req.incommingUser.id;
     // console.log(fetchedUserId)
-    let fetchtheuser = await User.findById(fetchedUserId).select("-password")
-    res.send(fetchtheuser)
+    let fetchtheuser = await User.findById(fetchedUserId).select("-password");
+    res.send(fetchtheuser);
+  } catch {
+    return res
+      .status(400)
+      .json({ errors: "Some error occured please try again later" });
   }
-  catch {
-    return res.status(400).json({ "errors": "Some error occured please try again later" });
-  }
-  
-})
+});
 
-module.exports = router
+module.exports = router;

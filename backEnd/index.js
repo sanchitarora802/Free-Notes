@@ -1,22 +1,19 @@
-const connectToMongo = require('./db.js');
-const express = require('express')
-var cors = require('cors')
+const connectToMongo = require("./db.js");
+const express = require("express");
+require("dotenv").config();
+var cors = require("cors");
 
 connectToMongo();
 
-const app = express()
-const port = 4000
+const app = express();
+const port = 4000;
 
 app.use(express.json());
 
-//Available routes 
-// app.use('/', (req,res)=>{
-//     res.send('Welecome the first route')
-// })
-app.use(cors())
-app.use('/api/auth', require('./routes/auth'))
-app.use('/api/fetchNotes', require('./routes/fetchNotes'))
+app.use(cors());
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/fetchNotes", require("./routes/fetchNotes"));
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
-})
+  console.log(`Example app listening on port http://localhost:${port}`);
+});
