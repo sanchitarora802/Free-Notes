@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const connectToMongo = () => {
-  mongoose.connect(process.env.MONGODB_URI, () => {
-    // console.log("connection successfully");
+  return mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   });
 };
-
 module.exports = connectToMongo;

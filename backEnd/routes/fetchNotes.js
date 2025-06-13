@@ -26,7 +26,7 @@ router.post(
         userid: fetchedUserId,
         title: req.body.title,
         description: req.body.description,
-        tag: req.body.tag,
+        tag: req.body.tag || "General",
       });
 
       const savedNote = await incommingNote.save();
@@ -42,27 +42,12 @@ router.post(
 );
 
 //Route 2: Fetch all the notes according to the user.
-router.post("/getNotes/:id", fetchUserId, async function (req, res) {
+router.get("/getNotes/:id", fetchUserId, async function (req, res) {
   try {
     const fetchedUserId = req.incommingUser.id;
-    // User.find({ name: 'Punit'}, function (err, docs) {
-    //     if (err){
-    //         console.log(err);
-    //     }
-    //     else{
-    //         console.log("First function call : ", docs);
-    //     }
-    // });
     //Local Variable created to store the response from find function. Find Function is async and gives the response later to store that we have also used .clone method at the end to store the result and pass it as json.
-    let response = [];
-    let notes = await Note.find({ userid: fetchedUserId }, (err, docs) => {
-      if (err) console.log(err);
-      else {
-        //   console.log("First function call : ", docs);
-        response = docs;
-      }
-    }).clone();
-    res.json(response);
+    const notes = await Note.find({ userid: fetchedUserId }).clone();
+    res.json(notes);
   } catch (error) {
     console.log(error);
     return res

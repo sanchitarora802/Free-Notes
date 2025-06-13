@@ -34,9 +34,6 @@ function Notes(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //    console.log("edit submit button")
-    // while calling the function always check the parameters to send. Dont always send the complete object. Check for the parameters it is accepting
-    //    console.log("while passing in submit function",{demoNote})
     context.editNote(
       demoNote._id,
       demoNote.title.toString(),
