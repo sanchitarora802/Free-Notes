@@ -10,7 +10,7 @@ const port = 4000;
 
 // Update CORS to allow only your frontend domain
 const allowedOrigins = [
-  "https://free-notes-delta.vercel.app/",
+  "https://free-notes-delta.vercel.app",
   "http://localhost:3000", // for local development
 ];
 
@@ -23,7 +23,7 @@ app.use(
 
 app.use(express.json());
 
-app.use(cors());
+// app.use(cors());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/fetchNotes", require("./routes/fetchNotes"));
 
