@@ -1,5 +1,4 @@
 import "./App.css";
-import Home from "./components/home";
 import Navbar from "./components/navBar";
 import Alert from "./components/Alert";
 // import About from "./components/about";
@@ -8,6 +7,7 @@ import NoteState from "./contexts/notes/noteState";
 import AddNotes from "./components/AddNotes";
 import { useState } from "react";
 import Footer from "./components/Footer";
+import Home from "./components/Home";
 
 function App() {
   const [alert, setAlert] = useState(null);

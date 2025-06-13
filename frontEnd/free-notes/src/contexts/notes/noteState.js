@@ -21,7 +21,7 @@ const NoteState = (props) => {
     });
     const fetchedData = await response.json();
     // console.log(fetchedData)
-    setNotes(Array.isArray(fetchedData) || []);
+    setNotes(Array.isArray(fetchedData) ? fetchedData : []);
     // console.log(notes,notesStarting)
   };
 

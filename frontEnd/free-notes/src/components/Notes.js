@@ -55,6 +55,11 @@ function Notes(props) {
     }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    console.log("context.notes:", context.notes);
+  }, [context.notes]);
+
   return (
     <>
       {/* Modal Button */}
