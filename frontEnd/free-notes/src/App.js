@@ -5,12 +5,15 @@ import Alert from "./components/Alert";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NoteState from "./contexts/notes/noteState";
 import AddNotes from "./components/AddNotes";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
+import UserContext from "./contexts/user/userContext";
+import jwt_decode from "jwt-decode";
 
 function App() {
   const [alert, setAlert] = useState(null);
+  const context = useContext(UserContext);
 
   const showAlert = (message, type) => {
     setAlert({
@@ -39,6 +42,14 @@ function App() {
       settextheadingcolor("black");
     }
   };
+
+  useEffect(() => {
+    let existingtoken = localStorage.getItem("token");
+    if (existingtoken) {
+      let res = jwt_decode(existingtoken);
+      context.setUserDetails(res?.user);
+    }
+  }, []);
 
   return (
     <>

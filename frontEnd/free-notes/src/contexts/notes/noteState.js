@@ -38,26 +38,17 @@ const NoteState = (props) => {
         },
         body: JSON.stringify({ title, description, tag }),
       });
-      console.log(response);
-      if (response._id !== "") {
+      if (response.status === 200) {
         getNotes();
         props.showAlert("Note Added Successfully", "success");
       }
-    } catch {
+      if (response.status === 400) {
+        getNotes();
+        props.showAlert("Title can not be empty", "warning");
+      }
+    } catch (e) {
       props.showAlert("Please try again", "danger");
     }
-    //     const dummyNote =
-    //     {
-    //         "_id": "62d1239befcebb8681125a8387",
-    //         "userid": "62cd48eb110b4af5a0563329",
-    //         "title": title,
-    //         "description": description,
-    //         "tag": tag,
-    //         "timeStamp": "2022-07-15T08:21:47.570Z",
-    //         "__v": 0
-    //     }
-    //     console.log("Adding a new note")
-    //     setNotes(notes.concat(dummyNote))
   };
 
   // Delete a new note
