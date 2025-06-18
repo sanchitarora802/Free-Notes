@@ -1,17 +1,12 @@
-import { React, useState } from "react";
-import jwt_decode from "jwt-decode";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import cogoToast from "cogo-toast";
 import "../App.css";
+import CustomModal from "./Modal";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 function NavBar(props) {
-  // Used for checking which page is active.
-  // useEffect(() => {
-  //     console.log(location.pathname)
-  // })
-
   let navigate = useNavigate();
   const [credentials, setcredentials] = useState({
     email: "",
@@ -114,68 +109,59 @@ function NavBar(props) {
     localStorage.removeItem("token");
   };
 
-  let decode;
-  if (localStorage.getItem("token")) {
-    decode = jwt_decode(localStorage.getItem("token"));
-  }
+  // if (localStorage.getItem("token")) {
+  //   jwt_decode(localStorage.getItem("token"));
+  // }
 
   let location = useLocation();
   return (
     <>
-      <div>
-        {/* Login Modal code with react bootstrap liberary  */}
-        <Modal show={showloginmodal} onHide={handleSignupModalClose}>
-          <Modal.Header>
-            <Modal.Title>Login</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form>
-              <div className="form-group">
-                <label htmlFor="email">Email address</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  name="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                  onChange={LoginchangeFunction}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  onChange={LoginchangeFunction}
-                />
-              </div>
-            </form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleLoginModalClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleLoginModalSubmit}>
-              Login
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+      {showloginmodal && (
+        <CustomModal
+          showloginmodal={showloginmodal}
+          handleSignupModalClose={handleSignupModalClose}
+          title={"Login"}
+          LoginchangeFunction={LoginchangeFunction}
+          handleLoginModalClose={handleLoginModalClose}
+          handleLoginModalSubmit={handleLoginModalSubmit}
+          textcolor={props.mode === "primary" ? "black" : props.textcolor}
+          bgColor={props.mode === "primary" ? "white" : "#343a40"}
+        />
+      )}
 
       <div>
         {/* Signup Modal code with react bootstrap liberary  */}
         <Modal show={showsignupmodal} onHide={handleSignupModalClose}>
-          <Modal.Header>
-            <Modal.Title>Signup</Modal.Title>
+          <Modal.Header
+            style={{
+              background: props.mode === "primary" ? "white" : "#343a40",
+            }}
+          >
+            <Modal.Title
+              className={
+                props.mode === "primary" ? "black" : `text-${props.textcolor}`
+              }
+            >
+              Signup
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body
+            style={{
+              background: props.mode === "primary" ? "white" : "#343a40",
+            }}
+          >
             <form>
               <div className="form-group">
-                <label htmlFor="name">Name</label>
+                <label
+                  className={
+                    props.mode === "primary"
+                      ? "black"
+                      : `text-${props.textcolor}`
+                  }
+                  htmlFor="name"
+                >
+                  Name
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -187,7 +173,16 @@ function NavBar(props) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="email">Email address</label>
+                <label
+                  className={
+                    props.mode === "primary"
+                      ? "black"
+                      : `text-${props.textcolor}`
+                  }
+                  htmlFor="email"
+                >
+                  Email address
+                </label>
                 <input
                   type="email"
                   className="form-control"
@@ -199,7 +194,16 @@ function NavBar(props) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label
+                  className={
+                    props.mode === "primary"
+                      ? "black"
+                      : `text-${props.textcolor}`
+                  }
+                  htmlFor="password"
+                >
+                  Password
+                </label>
                 <input
                   type="password"
                   className="form-control"
@@ -210,7 +214,16 @@ function NavBar(props) {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="cpassword">Confirm Password</label>
+                <label
+                  className={
+                    props.mode === "primary"
+                      ? "black"
+                      : `text-${props.textcolor}`
+                  }
+                  htmlFor="cpassword"
+                >
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   className="form-control"
@@ -223,7 +236,11 @@ function NavBar(props) {
               </div>
             </form>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer
+            style={{
+              background: props.mode === "primary" ? "white" : "#343a40",
+            }}
+          >
             <Button variant="secondary" onClick={handleSignupModalClose}>
               Close
             </Button>
