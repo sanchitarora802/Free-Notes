@@ -12,21 +12,28 @@ function Home(props) {
       </h2>
       <div className="centered-container container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center">
         <div
-          className="w-100"
+          className={`w-100`}
           style={{
             height: "100%",
             maxWidth: 600,
-            backgroundColor: "black !important",
+            background: props.bgColor,
           }}
         >
-          <div className="card shadow-lg p-4 border-0">
-            <div className="text-center mb-3">
+          <div
+            className={`card shadow-lg p-4 border-0 text-${props.textheadingcolor}`}
+            style={{
+              background: props.bgColor,
+            }}
+          >
+            <div className={`text-center mb-3 text-${props.textheadingcolor}`}>
               <i
                 className="bi bi-journal-richtext"
-                style={{ fontSize: "3rem", color: "#007bff" }}
+                style={{ fontSize: "3rem", color: props.svgColor }}
               ></i>
             </div>
-            <p className="mb-4 text-secondary text-center">
+            <p
+              className={`mb-4 text-secondary text-center text-${props.textheadingcolor}`}
+            >
               Your personal space to organize thoughts, ideas, and important
               information.
             </p>
@@ -37,7 +44,14 @@ function Home(props) {
               <li>💡 Access your notes anytime, anywhere</li>
             </ul>
             <div className="text-center">
-              <a href="/addNotes" className={`btn btn-${props.textcolor} px-4`}>
+              <a
+                href="/addNotes"
+                className={`btn btn-outline-${
+                  props.mode === "primary" ? "" : "primary"
+                } text-${
+                  props.mode === "primary" ? "primary" : props.textheadingcolor
+                } px-4`}
+              >
                 Add Your First Note
               </a>
             </div>

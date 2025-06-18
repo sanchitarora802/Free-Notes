@@ -28,6 +28,8 @@ function App() {
   const [mode, setMode] = useState("primary"); //state 1 saved
   const [textcolor, settextcolor] = useState("white"); //state 2 saved
   const [textheadingcolor, settextheadingcolor] = useState("black"); //state 3 saved
+  const [svgColor, setSvgColor] = useState(""); //state 4 saved
+  const [bgColor, setBgColor] = useState("white"); //state 5 saved
 
   const toggleMode = () => {
     if (mode === "primary") {
@@ -35,11 +37,15 @@ function App() {
       document.body.style.backgroundColor = "black";
       settextcolor("warning");
       settextheadingcolor("warning");
+      setSvgColor("#ffc107");
+      setBgColor("#000");
     } else {
       setMode("primary");
       document.body.style.backgroundColor = "white";
       settextcolor("white");
       settextheadingcolor("black");
+      setSvgColor("#007bff");
+      setBgColor("#fff");
     }
   };
 
@@ -71,6 +77,8 @@ function App() {
                   mode={mode}
                   textcolor={textcolor}
                   textheadingcolor={textheadingcolor}
+                  svgColor={svgColor}
+                  bgColor={bgColor}
                 />
               }
             />
