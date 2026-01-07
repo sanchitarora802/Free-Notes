@@ -8,6 +8,7 @@ const port = process.env.PORT || 4000;
 
 // Update CORS to allow only your frontend domain
 const allowedOrigins = [
+  "https://free-notes.sanchitforyou.co.in",
   "https://free-notes-delta.vercel.app",
   "http://localhost:3000", // for local development
 ];
